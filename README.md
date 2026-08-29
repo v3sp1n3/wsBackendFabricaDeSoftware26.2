@@ -37,6 +37,30 @@ O projeto utiliza dois bancos conforme o ambiente:
 
 Essa configuração permite desenvolver sem instalar um banco adicional no computador e manter dados persistentes no ambiente online.
 
+## Modelo de dados
+
+O relacionamento principal do sistema é de um para muitos: um autor pode possuir vários livros, mas cada livro pertence a apenas um autor.
+
+```mermaid
+erDiagram
+    AUTOR ||--o{ LIVRO : "possui"
+
+    AUTOR {
+        int id PK
+        string nome
+        string nacionalidade
+    }
+
+    LIVRO {
+        int id PK
+        string titulo
+        int ano_publicacao
+        int autor_id FK
+    }
+```
+
+O campo `autor_id` é uma chave estrangeira que relaciona cada livro ao seu autor.
+
 ## Pré-requisitos
 
 - Git instalado.
