@@ -15,6 +15,29 @@ Projeto desenvolvido em Django para gerenciamento de autores e livros. Ele reún
 - Filtros, ordenação e paginação na API.
 - Testes automatizados e integração contínua no GitHub Actions.
 
+## Requisitos atendidos
+
+### Requisitos obrigatórios
+
+- Projeto Django com interface web em templates HTML.
+- CRUD completo de autores e livros.
+- Duas entidades relacionadas por chave estrangeira: `Autor` e `Livro`.
+- Consumo da API externa gratuita Open Library.
+- Tratamento de erros de timeout, conexão, status HTTP e dados inválidos.
+- Arquivos `.gitignore`, `requirements.txt` e `README.md` configurados.
+- Repositório com o nome solicitado: `wsBackendFabricaDeSoftware26.2`.
+
+### Diferenciais implementados
+
+- Banco PostgreSQL externo no ambiente publicado.
+- Commits semânticos e integração contínua com GitHub Actions.
+- Organização em modelos, views, formulários, serializers, rotas, templates e arquivos estáticos.
+- Documentação de instalação, uso, API e deploy.
+- Interface funcional com HTML, CSS responsivo e templates Jinja/Django.
+- API REST protegida com autenticação JWT.
+- Documentação interativa da API com Swagger/OpenAPI.
+- Filtros, ordenação e paginação nos endpoints da API.
+
 ## Tecnologias
 
 - Python 3.12 ou superior
