@@ -3,3 +3,7 @@ requests>=2.31.0
 djangorestframework
 djangorestframework-simplejwt
 drf-spectacular
+dj-database-url>=2.3.0
+gunicorn>=23.0.0
+psycopg2-binary>=2.9.10
+whitenoise[brotli]>=6.8.2

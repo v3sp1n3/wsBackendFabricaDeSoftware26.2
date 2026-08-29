@@ -155,6 +155,37 @@ python manage.py test
 
 Os testes usam um banco temporário e não alteram o banco de dados local. O GitHub Actions também executa essas verificações automaticamente a cada envio para a branch `main`.
 
+## Deploy no Render
+
+O projeto está preparado para executar localmente com SQLite e, no Render, usar PostgreSQL por meio da variável `DATABASE_URL`.
+
+1. Envie as alterações para o GitHub.
+2. No painel do Render, crie um banco **PostgreSQL** e copie a **Internal Database URL**.
+3. Crie um **Web Service**, conecte este repositório e selecione o ambiente **Python 3**.
+4. Configure os comandos:
+
+   ```text
+   Build Command: bash build.sh
+   Start Command: gunicorn config.wsgi:application
+   ```
+
+5. Adicione as variáveis de ambiente:
+
+   | Chave | Valor |
+   | --- | --- |
+   | `DATABASE_URL` | Internal Database URL do banco criado. |
+   | `SECRET_KEY` | Use a opção Generate do Render. |
+   | `DEBUG` | `False` |
+   | `WEB_CONCURRENCY` | `2` |
+
+O arquivo `build.sh` instala as dependências, coleta os arquivos estáticos e aplica as migrações a cada deploy. Ao final, crie o administrador pelo Shell do Render:
+
+```bash
+python manage.py createsuperuser
+```
+
+O serviço fornecerá uma URL pública no formato `https://nome-do-servico.onrender.com`.
+
 ## Estrutura principal
 
 ```text
