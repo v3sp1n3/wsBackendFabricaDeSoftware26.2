@@ -22,8 +22,20 @@ Projeto desenvolvido em Django para gerenciamento de autores e livros. Ele reún
 - Django REST Framework
 - Simple JWT
 - drf-spectacular (Swagger/OpenAPI)
-- SQLite
+- SQLite para desenvolvimento local
+- PostgreSQL externo gerenciado pelo Render para o ambiente publicado
 - Requests
+
+## Banco de dados
+
+O projeto utiliza dois bancos conforme o ambiente:
+
+| Ambiente | Banco de dados | Configuração |
+| --- | --- | --- |
+| Desenvolvimento local | SQLite | Arquivo local `db.sqlite3`. |
+| Produção no Render | PostgreSQL externo | Variável de ambiente `DATABASE_URL` conectada ao banco `biblioteca-db`. |
+
+Essa configuração permite desenvolver sem instalar um banco adicional no computador e manter dados persistentes no ambiente online.
 
 ## Pré-requisitos
 
