@@ -4,3 +4,20 @@ __pycache__/
 db.sqlite3
 .env
 staticfiles/
+
+# Arquivos de cobertura e testes
+.coverage
+htmlcov/
+.pytest_cache/
+
+# Logs locais
+*.log
+
+# Arquivos temporários do sistema
+.DS_Store
+Thumbs.db
+
+# Arquivos temporários do SQLite
+db.sqlite3-journal
+db.sqlite3-wal
+db.sqlite3-shm
