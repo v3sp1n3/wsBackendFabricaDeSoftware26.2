@@ -1,2 +1,5 @@
 Django==6.1
 requests>=2.31.0
+djangorestframework
+djangorestframework-simplejwt
+drf-spectacular
