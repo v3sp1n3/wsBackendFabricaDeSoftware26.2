@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Buscar livros externos</title>
+</head>
+<body>
+    <h1>Buscar livros na Open Library</h1>
+
+    <form method="get">
+        <input
+            type="text"
+            name="q"
+            placeholder="Digite o título ou autor"
+            value="{{ consulta|default:'' }}"
+            required
+        >
+        <button type="submit">Buscar</button>
+    </form>
+
+    {% if erro %}
+        <p>{{ erro }}</p>
+    {% endif %}
+
+    {% if livros %}
+        <h2>Resultados para: {{ consulta }}</h2>
+
+        <ul>
+            {% for livro in livros %}
+                <li>
+                    <strong>{{ livro.title }}</strong>
+
+                    {% if livro.author_name %}
+                        — {{ livro.author_name.0 }}
+                    {% endif %}
+
+                    {% if livro.first_publish_year %}
+                        ({{ livro.first_publish_year }})
+                    {% endif %}
+                </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+    <p><a href="{% url 'lista_livros' %}">Voltar para meus livros</a></p>
+</body>
+</html>
