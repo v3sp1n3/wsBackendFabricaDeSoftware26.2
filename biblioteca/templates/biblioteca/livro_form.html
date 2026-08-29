@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Cadastro de livro</title>
+</head>
+<body>
+    <h1>Livro</h1>
+
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+
+        <button type="submit">Salvar</button>
+    </form>
+
+    <p><a href="{% url 'lista_livros' %}">Voltar para a lista</a></p>
+</body>
+</html>

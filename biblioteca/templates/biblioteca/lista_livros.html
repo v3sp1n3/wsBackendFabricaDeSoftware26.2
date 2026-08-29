@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Biblioteca</title>
+</head>
+<body>
+    <h1>Livros cadastrados</h1>
+
+    <p>
+        <a href="{% url 'criar_livro' %}">Cadastrar novo livro</a>
+    </p>
+
+    {% if livros %}
+        <ul>
+            {% for livro in livros %}
+                <li>
+                    <strong>{{ livro.titulo }}</strong>
+                    — {{ livro.autor.nome }}
+                    ({{ livro.ano_publicacao }})
+
+                    <a href="{% url 'detalhe_livro' livro.pk %}">Ver</a>
+                    <a href="{% url 'editar_livro' livro.pk %}">Editar</a>
+                    <a href="{% url 'excluir_livro' livro.pk %}">Excluir</a>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>Nenhum livro cadastrado.</p>
+    {% endif %}
+</body>
+</html>
