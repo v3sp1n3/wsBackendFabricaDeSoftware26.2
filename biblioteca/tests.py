@@ -60,8 +60,11 @@ class BibliotecaApiTests(APITestCase):
         resposta = self.client.get(reverse("livro-list"))
 
         self.assertEqual(resposta.status_code, status.HTTP_200_OK)
-        self.assertEqual(len(resposta.data), 1)
-        self.assertEqual(resposta.data[0]["titulo"], "Dom Casmurro")
+        self.assertEqual(resposta.data["count"], 1)
+        self.assertEqual(
+            resposta.data["results"][0]["titulo"],
+            "Dom Casmurro",
+        )
 
     def test_usuario_autenticado_cria_livro(self):
         self.client.force_authenticate(user=self.usuario)
@@ -79,9 +82,23 @@ class BibliotecaApiTests(APITestCase):
         self.assertEqual(resposta.status_code, status.HTTP_201_CREATED)
         self.assertEqual(Livro.objects.count(), 2)
 
+    def test_api_filtra_livros_por_titulo(self):
+        self.client.force_authenticate(user=self.usuario)
+
+        resposta = self.client.get(
+            reverse("livro-list"),
+            {"search": "Casmurro"},
+        )
+
+        self.assertEqual(resposta.status_code, status.HTTP_200_OK)
+        self.assertEqual(resposta.data["count"], 1)
+        self.assertEqual(
+            resposta.data["results"][0]["titulo"],
+            "Dom Casmurro",
+        )
+
     @patch("biblioteca.views.requests.get")
     def test_busca_externa_trata_timeout(self, mock_get):
-        mock_get.side_effect = TimeoutError()
         mock_get.side_effect = requests.exceptions.Timeout()
 
         resposta = self.client.get(
@@ -90,3 +107,7 @@ class BibliotecaApiTests(APITestCase):
         )
 
         self.assertEqual(resposta.status_code, status.HTTP_200_OK)
+        self.assertContains(
+            resposta,
+            "A consulta demorou muito para responder",
+        )
