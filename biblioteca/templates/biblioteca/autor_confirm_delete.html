@@ -1,0 +1,17 @@
+{% extends "biblioteca/base.html" %}
+
+{% block title %}Excluir autor | Biblioteca{% endblock %}
+
+{% block content %}
+<section class="painel">
+    <h1>Excluir autor</h1>
+    <p>Deseja realmente excluir <strong>{{ autor.nome }}</strong>?</p>
+    <p>Os livros vinculados a ele também serão excluídos.</p>
+
+    <form method="post">
+        {% csrf_token %}
+        <button class="botao botao-perigo" type="submit">Sim, excluir</button>
+        <a class="botao botao-secundario" href="{% url 'lista_autores' %}">Cancelar</a>
+    </form>
+</section>
+{% endblock %}

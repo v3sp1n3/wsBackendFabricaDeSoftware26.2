@@ -1,0 +1,36 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Biblioteca{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'biblioteca/css/style.css' %}">
+</head>
+<body>
+    <header class="cabecalho">
+        <div class="container navegacao">
+            <a class="marca" href="{% url 'lista_livros' %}">
+                Biblioteca
+            </a>
+
+            <nav>
+                <a href="{% url 'lista_livros' %}">Livros</a>
+                <a href="{% url 'lista_autores' %}">Autores</a>
+                <a href="{% url 'buscar_livros_externos' %}">Busca externa</a>
+                <a href="{% url 'swagger-ui' %}">API</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container conteudo">
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer>
+        <div class="container">
+            Sistema de Biblioteca · Django
+        </div>
+    </footer>
+</body>
+</html>

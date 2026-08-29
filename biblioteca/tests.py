@@ -97,6 +97,24 @@ class BibliotecaApiTests(APITestCase):
             "Dom Casmurro",
         )
 
+    def test_importa_livro_externo_para_catalogo(self):
+        resposta = self.client.post(
+            reverse("importar_livro_externo"),
+            {
+                "titulo": "Quincas Borba",
+                "ano_publicacao": 1891,
+                "nome_autor": "Machado de Assis",
+            },
+        )
+
+        self.assertRedirects(resposta, reverse("lista_livros"))
+        self.assertTrue(
+            Livro.objects.filter(
+                titulo="Quincas Borba",
+                autor=self.autor,
+            ).exists()
+        )
+
     @patch("biblioteca.views.requests.get")
     def test_busca_externa_trata_timeout(self, mock_get):
         mock_get.side_effect = requests.exceptions.Timeout()

@@ -1,0 +1,35 @@
+{% extends "biblioteca/base.html" %}
+
+{% block title %}Autores | Biblioteca{% endblock %}
+
+{% block content %}
+<section class="painel">
+    <div class="cabecalho-pagina">
+        <div>
+            <h1>Autores cadastrados</h1>
+            <p>Gerencie os autores e seus livros vinculados.</p>
+        </div>
+        <a class="botao" href="{% url 'criar_autor' %}">Cadastrar autor</a>
+    </div>
+
+    {% if autores %}
+        <ul class="lista">
+            {% for autor in autores %}
+                <li>
+                    <div>
+                        <strong>{{ autor.nome }}</strong><br>
+                        <span>{{ autor.nacionalidade }} · {{ autor.livros.count }} livro(s)</span>
+                    </div>
+                    <div class="acoes">
+                        <a href="{% url 'detalhe_autor' autor.pk %}">Ver</a>
+                        <a href="{% url 'editar_autor' autor.pk %}">Editar</a>
+                        <a href="{% url 'excluir_autor' autor.pk %}">Excluir</a>
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>Nenhum autor cadastrado até o momento.</p>
+    {% endif %}
+</section>
+{% endblock %}

@@ -1,47 +1,40 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <title>Buscar livros externos</title>
-</head>
-<body>
+{% extends "biblioteca/base.html" %}
+
+{% block title %}Busca externa | Biblioteca{% endblock %}
+
+{% block content %}
+<section class="painel">
     <h1>Buscar livros na Open Library</h1>
+    <p>Consulte títulos e autores em uma API externa gratuita.</p>
 
     <form method="get">
-        <input
-            type="text"
-            name="q"
-            placeholder="Digite o título ou autor"
-            value="{{ consulta|default:'' }}"
-            required
-        >
-        <button type="submit">Buscar</button>
+        <p>
+            <label for="consulta">Título ou autor</label>
+            <input id="consulta" name="q" placeholder="Ex.: Dom Casmurro" required value="{{ consulta|default:'' }}">
+        </p>
+        <button class="botao" type="submit">Buscar</button>
     </form>
 
     {% if erro %}
-        <p>{{ erro }}</p>
+        <p class="mensagem-erro">{{ erro }}</p>
     {% endif %}
 
     {% if livros %}
-        <h2>Resultados para: {{ consulta }}</h2>
-
-        <ul>
+        <h2>Resultados para “{{ consulta }}”</h2>
+        <ul class="lista">
             {% for livro in livros %}
                 <li>
-                    <strong>{{ livro.title }}</strong>
-
-                    {% if livro.author_name %}
-                        — {{ livro.author_name.0 }}
-                    {% endif %}
-
-                    {% if livro.first_publish_year %}
-                        ({{ livro.first_publish_year }})
-                    {% endif %}
+                    <div>
+                        <strong>{{ livro.title }}</strong>
+                        {% if livro.author_name %} · {{ livro.author_name.0 }}{% endif %}
+                        {% if livro.first_publish_year %} · {{ livro.first_publish_year }}{% endif %}
+                    </div>
+                    <a href="{% url 'importar_livro_externo' %}?titulo={{ livro.title|urlencode }}&nome_autor={{ livro.author_name.0|default:''|urlencode }}&ano_publicacao={{ livro.first_publish_year|default:'' }}">
+                        Adicionar à minha biblioteca
+                    </a>
                 </li>
             {% endfor %}
         </ul>
     {% endif %}
-
-    <p><a href="{% url 'lista_livros' %}">Voltar para meus livros</a></p>
-</body>
-</html>
+</section>
+{% endblock %}

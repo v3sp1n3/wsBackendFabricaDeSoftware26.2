@@ -1,38 +1,39 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <title>Biblioteca</title>
-</head>
-<body>
-    <h1>Livros cadastrados</h1>
+{% extends "biblioteca/base.html" %}
 
-<p>
-    <a href="{% url 'buscar_livros_externos' %}">
-        Buscar livros em uma API externa
-    </a>
-</p>
+{% block title %}Livros | Biblioteca{% endblock %}
 
-    <p>
-        <a href="{% url 'criar_livro' %}">Cadastrar novo livro</a>
-    </p>
+{% block content %}
+<section class="painel">
+    <div class="cabecalho-pagina">
+        <div>
+            <h1>Livros cadastrados</h1>
+            <p>Gerencie os livros da sua biblioteca.</p>
+        </div>
+
+        <a class="botao" href="{% url 'criar_livro' %}">
+            Cadastrar livro
+        </a>
+    </div>
 
     {% if livros %}
-        <ul>
+        <ul class="lista">
             {% for livro in livros %}
                 <li>
-                    <strong>{{ livro.titulo }}</strong>
-                    — {{ livro.autor.nome }}
-                    ({{ livro.ano_publicacao }})
+                    <div>
+                        <strong>{{ livro.titulo }}</strong><br>
+                        <span>{{ livro.autor.nome }} · {{ livro.ano_publicacao }}</span>
+                    </div>
 
-                    <a href="{% url 'detalhe_livro' livro.pk %}">Ver</a>
-                    <a href="{% url 'editar_livro' livro.pk %}">Editar</a>
-                    <a href="{% url 'excluir_livro' livro.pk %}">Excluir</a>
+                    <div class="acoes">
+                        <a href="{% url 'detalhe_livro' livro.pk %}">Ver</a>
+                        <a href="{% url 'editar_livro' livro.pk %}">Editar</a>
+                        <a href="{% url 'excluir_livro' livro.pk %}">Excluir</a>
+                    </div>
                 </li>
             {% endfor %}
         </ul>
     {% else %}
-        <p>Nenhum livro cadastrado.</p>
+        <p>Nenhum livro cadastrado até o momento.</p>
     {% endif %}
-</body>
-</html>
+</section>
+{% endblock %}

@@ -9,8 +9,10 @@ from django.views.generic import (
     ListView,
     UpdateView,
 )
+from django.views.generic.edit import FormView
 
-from .models import Livro
+from .forms import ImportarLivroExternoForm
+from .models import Autor, Livro
 
 
 class LivroListView(ListView):
@@ -42,6 +44,76 @@ class LivroDeleteView(DeleteView):
     model = Livro
     template_name = "biblioteca/livro_confirm_delete.html"
     success_url = reverse_lazy("lista_livros")
+
+class AutorListView(ListView):
+    queryset = Autor.objects.prefetch_related("livros").all().order_by("nome")
+    template_name = "biblioteca/lista_autores.html"
+    context_object_name = "autores"
+
+
+class AutorCreateView(CreateView):
+    model = Autor
+    fields = ["nome", "nacionalidade"]
+    template_name = "biblioteca/autor_form.html"
+    success_url = reverse_lazy("lista_autores")
+
+
+class AutorDetailView(DetailView):
+    model = Autor
+    template_name = "biblioteca/autor_detail.html"
+
+
+class AutorUpdateView(UpdateView):
+    model = Autor
+    fields = ["nome", "nacionalidade"]
+    template_name = "biblioteca/autor_form.html"
+    success_url = reverse_lazy("lista_autores")
+
+
+class AutorDeleteView(DeleteView):
+    model = Autor
+    template_name = "biblioteca/autor_confirm_delete.html"
+    success_url = reverse_lazy("lista_autores")
+
+
+class ImportarLivroExternoView(FormView):
+    template_name = "biblioteca/importar_livro_externo.html"
+    form_class = ImportarLivroExternoForm
+    success_url = reverse_lazy("lista_livros")
+
+    def get_initial(self):
+        initial = super().get_initial()
+        ano_publicacao = self.request.GET.get("ano_publicacao", "").strip()
+
+        initial.update(
+            {
+                "titulo": self.request.GET.get("titulo", "").strip(),
+                "nome_autor": self.request.GET.get("nome_autor", "").strip(),
+            }
+        )
+
+        if ano_publicacao.isdigit():
+            initial["ano_publicacao"] = ano_publicacao
+
+        return initial
+
+    def form_valid(self, form):
+        nome_autor = form.cleaned_data["nome_autor"].strip()
+        autor = Autor.objects.filter(nome__iexact=nome_autor).first()
+
+        if autor is None:
+            autor = Autor.objects.create(
+                nome=nome_autor,
+                nacionalidade="Não informada",
+            )
+
+        Livro.objects.create(
+            titulo=form.cleaned_data["titulo"],
+            ano_publicacao=form.cleaned_data["ano_publicacao"],
+            autor=autor,
+        )
+
+        return super().form_valid(form)
 
 
 def buscar_livros_externos(request):

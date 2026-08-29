@@ -1,19 +1,16 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <title>Excluir livro</title>
-</head>
-<body>
-    <h1>Excluir livro</h1>
+{% extends "biblioteca/base.html" %}
 
-    <p>Deseja realmente excluir o livro "{{ livro.titulo }}"?</p>
+{% block title %}Excluir livro | Biblioteca{% endblock %}
+
+{% block content %}
+<section class="painel">
+    <h1>Excluir livro</h1>
+    <p>Deseja realmente excluir <strong>{{ livro.titulo }}</strong>?</p>
 
     <form method="post">
         {% csrf_token %}
-        <button type="submit">Sim, excluir</button>
+        <button class="botao botao-perigo" type="submit">Sim, excluir</button>
+        <a class="botao botao-secundario" href="{% url 'lista_livros' %}">Cancelar</a>
     </form>
-
-    <p><a href="{% url 'lista_livros' %}">Cancelar</a></p>
-</body>
-</html>
+</section>
+{% endblock %}

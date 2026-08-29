@@ -1,0 +1,17 @@
+{% extends "biblioteca/base.html" %}
+
+{% block title %}Importar livro | Biblioteca{% endblock %}
+
+{% block content %}
+<section class="painel">
+    <h1>Adicionar à minha biblioteca</h1>
+    <p>Confira os dados abaixo antes de salvar o livro no seu catálogo.</p>
+
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button class="botao" type="submit">Confirmar e adicionar</button>
+        <a class="botao botao-secundario" href="{% url 'buscar_livros_externos' %}">Cancelar</a>
+    </form>
+</section>
+{% endblock %}

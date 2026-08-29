@@ -1,16 +1,21 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <title>{{ livro.titulo }}</title>
-</head>
-<body>
-    <h1>{{ livro.titulo }}</h1>
+{% extends "biblioteca/base.html" %}
+
+{% block title %}{{ livro.titulo }} | Biblioteca{% endblock %}
+
+{% block content %}
+<section class="painel">
+    <div class="cabecalho-pagina">
+        <div>
+            <h1>{{ livro.titulo }}</h1>
+            <p>Dados do livro cadastrado.</p>
+        </div>
+        <div class="acoes">
+            <a href="{% url 'editar_livro' livro.pk %}">Editar</a>
+            <a href="{% url 'lista_livros' %}">Voltar</a>
+        </div>
+    </div>
 
     <p><strong>Autor:</strong> {{ livro.autor.nome }}</p>
     <p><strong>Ano de publicação:</strong> {{ livro.ano_publicacao }}</p>
-
-    <a href="{% url 'editar_livro' livro.pk %}">Editar</a>
-    <a href="{% url 'lista_livros' %}">Voltar</a>
-</body>
-</html>
+</section>
+{% endblock %}

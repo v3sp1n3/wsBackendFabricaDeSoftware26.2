@@ -1,0 +1,17 @@
+{% extends "biblioteca/base.html" %}
+
+{% block title %}Autor | Biblioteca{% endblock %}
+
+{% block content %}
+<section class="painel">
+    <h1>{% if object %}Editar autor{% else %}Cadastrar autor{% endif %}</h1>
+    <p>Informe os dados do autor.</p>
+
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button class="botao" type="submit">Salvar</button>
+        <a class="botao botao-secundario" href="{% url 'lista_autores' %}">Cancelar</a>
+    </form>
+</section>
+{% endblock %}

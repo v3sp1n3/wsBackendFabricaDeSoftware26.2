@@ -1,0 +1,34 @@
+{% extends "biblioteca/base.html" %}
+
+{% block title %}{{ autor.nome }} | Biblioteca{% endblock %}
+
+{% block content %}
+<section class="painel">
+    <div class="cabecalho-pagina">
+        <div>
+            <h1>{{ autor.nome }}</h1>
+            <p>Dados e livros vinculados ao autor.</p>
+        </div>
+        <div class="acoes">
+            <a href="{% url 'editar_autor' autor.pk %}">Editar</a>
+            <a href="{% url 'lista_autores' %}">Voltar</a>
+        </div>
+    </div>
+
+    <p><strong>Nacionalidade:</strong> {{ autor.nacionalidade }}</p>
+
+    <h2>Livros deste autor</h2>
+    {% if autor.livros.all %}
+        <ul class="lista">
+            {% for livro in autor.livros.all %}
+                <li>
+                    <div><strong>{{ livro.titulo }}</strong> · {{ livro.ano_publicacao }}</div>
+                    <a href="{% url 'detalhe_livro' livro.pk %}">Ver livro</a>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>Este autor ainda não possui livros cadastrados.</p>
+    {% endif %}
+</section>
+{% endblock %}

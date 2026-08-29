@@ -1,19 +1,17 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <title>Cadastro de livro</title>
-</head>
-<body>
-    <h1>Livro</h1>
+{% extends "biblioteca/base.html" %}
+
+{% block title %}Livro | Biblioteca{% endblock %}
+
+{% block content %}
+<section class="painel">
+    <h1>{% if object %}Editar livro{% else %}Cadastrar livro{% endif %}</h1>
+    <p>Informe os dados do livro e o autor responsável.</p>
 
     <form method="post">
         {% csrf_token %}
         {{ form.as_p }}
-
-        <button type="submit">Salvar</button>
+        <button class="botao" type="submit">Salvar</button>
+        <a class="botao botao-secundario" href="{% url 'lista_livros' %}">Cancelar</a>
     </form>
-
-    <p><a href="{% url 'lista_livros' %}">Voltar para a lista</a></p>
-</body>
-</html>
+</section>
+{% endblock %}
