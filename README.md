@@ -247,6 +247,8 @@ python manage.py createsuperuser
 
 O serviço fornecerá uma URL pública no formato `https://nome-do-servico.onrender.com`.
 
+Como este: https://wsbackendfabricadesoftware26-2.onrender.com/
+
 ## Estrutura principal
 
 ```text
