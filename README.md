@@ -1,3 +1,5 @@
+# Nycolas Guilherme Nunes da Silva
+
 # Sistema de Biblioteca
 
 Projeto desenvolvido em Django para gerenciamento de autores e livros. Ele reúne uma interface web com CRUD completo, uma API REST protegida por JWT, documentação Swagger e integração com a API pública Open Library.
